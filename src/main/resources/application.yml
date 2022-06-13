@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5411/travelplanner
+    username: admin
+    password: admin
+  jpa:
+    generate-ddl: true
+  security:
+    user:
+      name: admin
+      password: admin
+server:
+  port: 8089

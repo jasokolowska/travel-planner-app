@@ -1,0 +1,6 @@
+CREATE TABLE DESTINATION (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+    name VARCHAR (50) NOT NULL ,
+    origin VARCHAR (50) NOT NULL ,
+    current_date DATE
+);

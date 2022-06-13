@@ -1,0 +1,45 @@
+<!--TODO: Create Thymeleaf template-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Destinations</title>
+</head>
+<body>
+<div class="container">
+    <h3>Destinations</h3>
+    <hr>
+    <a th:href="@{/destinations/add-form}"
+        class="btn btn-primary btn-sm mb-3">
+        Add destination
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Origin</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="destination: ${destinations}">
+            <td th:text="${destination.name}"></td>
+            <td th:text="${destination.origin}"></td>
+            <td th:text="${destination.price}"></td>
+            <td><a th:href="@{/destinations/delete(id=${destination.id})}"
+                   class="btn btn-primary btn-sm mb-3"
+                   onclick="if (!(confirm('Are you sure you want to delete this destination?'))) return false">
+                Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

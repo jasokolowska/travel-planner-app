@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 node_modules
+=======
+>>>>>>> 39ccd84 (adding destinations to postgresql by user via ui with thymeleaf)
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
