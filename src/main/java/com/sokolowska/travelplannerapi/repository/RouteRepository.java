@@ -1,9 +1,9 @@
 package com.sokolowska.travelplannerapi.repository;
 
-import com.sokolowska.travelplannerapi.model.Destination;
+import com.sokolowska.travelplannerapi.model.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DestinationRepository extends JpaRepository<Destination, Long> {
+public interface RouteRepository extends JpaRepository<Route, Long> {
 }

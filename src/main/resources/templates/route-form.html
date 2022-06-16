@@ -14,18 +14,18 @@
     <hr>
     <p class="h4 mb-4">Add destination</p>
 
-    <form action="#" th:action="@{/destinations/add}"
-                    th:object="${destination}" method="post">
+    <form action="#" th:action="@{/routes/add}"
+                    th:object="${route}" method="post">
 
-        <input type="text" th:field="*{name}" class="form-control mb-4 col-4" placeholder="Destination">
-        <input type="text" th:field="*{origin}" class="form-control mb-4 col-4" placeholder="Origin">
-        <input type="number" th:field="*{price}" class="form-control mb-4 col-4" placeholder="Price">
+        <input type="text" th:field="*{destination.name}" class="form-control mb-4 col-4" placeholder="Destination">
+        <input type="text" th:field="*{origin.name}" class="form-control mb-4 col-4" placeholder="Origin">
+        <input type="number" th:field="*{maxPrice}" class="form-control mb-4 col-4" placeholder="Price">
 
         <button type="submit" class="btn btn-info col-2">Add</button>
     </form>
 
     <hr>
-    <a th:href="@{/destinations}">Back to destinations list</a>
+    <a th:href="@{/routes}">Back to routes list</a>
 </div>
 </body>
 </html>
