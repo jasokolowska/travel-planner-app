@@ -1,19 +1,25 @@
 package com.sokolowska.travelplannerapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+import java.util.List;
 
-@Embeddable
-@Data
+@Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class Place {
+
+    @Id
+    @GeneratedValue
+    private long id;
 
     private String name;
     private Double latitude;
     private Double longitude;
+
+    @OneToMany
+    private List<Airport> airports;
 
 }

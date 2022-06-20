@@ -12,7 +12,7 @@ public class FlightService {
 
     private final FlightRepository flightRepository;
 
-    public Flight search(CriteriaDto criteriaDto) {
-        return new Flight("Wrocław", "Londyn");
-    }
+//    public Flight search(CriteriaDto criteriaDto) {
+//        return new Flight("Wrocław", "Londyn");
+//    }
 }

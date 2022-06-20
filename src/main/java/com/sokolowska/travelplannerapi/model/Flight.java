@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -19,11 +21,12 @@ public class Flight {
     @GeneratedValue
     private long id;
 
-    private String origin;
-    private String destination;
+    private String departureCity;
+    private String departureAirportCode;
+    private String destinationCity;
+    private String destinationAirportCode;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+    private BigDecimal price;
 
-    public Flight(String origin, String destination) {
-        this.origin = origin;
-        this.destination = destination;
-    }
 }

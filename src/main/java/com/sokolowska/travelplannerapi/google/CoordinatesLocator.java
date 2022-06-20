@@ -28,16 +28,16 @@ public class CoordinatesLocator implements GeoApiService {
     }
 
     @Override
-    public Place findCoordinates(String placeName) {
+    public double[] findCoordinates(String placeName) {
         try {
             GeocodingResult[] results = GeocodingApi.newRequest(context).address(placeName).await();
-            return new Place(placeName, results[0].geometry.location.lat, results[0].geometry.location.lng);
+            return new double[]{results[0].geometry.location.lat, results[0].geometry.location.lng};
         } catch (ApiException | IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
             Thread.currentThread().interrupt();
         }
-        return new Place();
+        return new double[]{};
     }
 }

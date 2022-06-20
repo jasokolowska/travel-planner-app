@@ -5,6 +5,8 @@ spring:
     password: admin
   jpa:
     generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
   security:
     user:
       name: admin

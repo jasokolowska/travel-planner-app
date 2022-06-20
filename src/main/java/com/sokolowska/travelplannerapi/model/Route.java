@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,20 +20,12 @@ public class Route {
     @GeneratedValue
     private long id;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride( name = "name", column = @Column(name = "destination_name")),
-            @AttributeOverride( name = "latitude", column = @Column(name = "destination_lat")),
-            @AttributeOverride( name = "longitude", column = @Column(name = "destination_long"))
-    })
+    @ManyToOne
+    @JoinColumn(name = "destination_id")
     private Place destination;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride( name = "name", column = @Column(name = "origin_name")),
-            @AttributeOverride( name = "latitude", column = @Column(name = "origin_lat")),
-            @AttributeOverride( name = "longitude", column = @Column(name = "origin_long"))
-    })
+    @ManyToOne
+    @JoinColumn(name = "origin_id")
     private Place origin;
 
     private BigDecimal maxPrice;
