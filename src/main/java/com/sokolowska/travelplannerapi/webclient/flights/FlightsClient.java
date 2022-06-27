@@ -1,5 +1,6 @@
 package com.sokolowska.travelplannerapi.tequila;
 
+import com.sokolowska.travelplannerapi.webclient.flights.dto.AirportListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AirportLocator implements AirportClient{
+public class FlightsClient {
 
     public static final String TEQUILA_URL_RADIUS = "https://tequila-api.kiwi.com/locations/radius";
     public static final String TEQUILA_URL_FLIGHT = "https://tequila-api.kiwi.com/v2/search";

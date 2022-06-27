@@ -1,4 +1,4 @@
-package com.sokolowska.travelplannerapi.tequila;
+package com.sokolowska.travelplannerapi.webclient.flights.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

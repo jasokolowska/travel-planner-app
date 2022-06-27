@@ -1,5 +1,6 @@
 package com.sokolowska.travelplannerapi.service;
 
+import com.sokolowska.travelplannerapi.controller.dto.CriteriaDto;
 import com.sokolowska.travelplannerapi.model.Flight;
 import com.sokolowska.travelplannerapi.repository.FlightRepository;
 import com.sokolowska.travelplannerapi.tequila.AirportClient;

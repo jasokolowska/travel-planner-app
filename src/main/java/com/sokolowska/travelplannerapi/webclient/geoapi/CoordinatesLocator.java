@@ -1,10 +1,9 @@
-package com.sokolowska.travelplannerapi.google;
+package com.sokolowska.travelplannerapi.webclient.geoapi;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
-import com.sokolowska.travelplannerapi.model.Place;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
