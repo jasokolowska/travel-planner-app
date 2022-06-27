@@ -1,5 +1,6 @@
 package com.sokolowska.travelplannerapi.service;
 
+import com.sokolowska.travelplannerapi.model.Place;
 import com.sokolowska.travelplannerapi.model.Route;
 import com.sokolowska.travelplannerapi.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,18 +14,21 @@ public class RouteService {
 
     private final RouteRepository routeRepository;
     private final PlaceService placeService;
+    private final FlightService flightService;
 
     public List<Route> findAll() {
         return routeRepository.findAll();
     }
 
     public void save(Route route) {
-        placeService.setCoordinatesAndAirports(route.getDestination());
-        placeService.setCoordinatesAndAirports(route.getOrigin());
-//        Place origin = geoApiService.findCoordinates(route.getOrigin().getName());
-//        Place destination = geoApiService.findCoordinates(route.getDestination().getName());
-//        route.setDestination(origin);
-//        route.setOrigin(destination);
+        Place destination = placeService.setCoordinatesAndAirports(route.getDestination());
+        Place origin = placeService.setCoordinatesAndAirports(route.getOrigin());
+
+        origin.getAirports().stream()
+                .forEach(startAirport -> {
+                    destination.getAirports().stream()
+                            .forEach(endAirport -> flightService.getFlight(startAirport.getCode(), endAirport.getCode()));
+                });
         routeRepository.save(route);
     }
 

@@ -24,4 +24,5 @@ public class AirportService {
                 .map(airportRepository::save)
                 .toList();
     }
+
 }

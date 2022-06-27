@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AirportLocator implements AirportClient{
 
-    public static final String TEQUILA_URL = "https://tequila-api.kiwi.com/locations/radius";
+    public static final String TEQUILA_URL_RADIUS = "https://tequila-api.kiwi.com/locations/radius";
+    public static final String TEQUILA_URL_FLIGHT = "https://tequila-api.kiwi.com/v2/search";
     private final String TEQUILA_API_KEY = System.getenv("TEQUILA_API");
     private final int LOCATOR_RADIUS_KM = 250;
 
@@ -25,7 +27,7 @@ public class AirportLocator implements AirportClient{
 
     @Override
     public AirportListDto getAirports(Double latitude, Double longitude){
-        URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL)
+        URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_RADIUS)
                 .queryParam("lat", latitude)
                 .queryParam("lon", longitude)
                 .queryParam("radius", LOCATOR_RADIUS_KM)
@@ -42,6 +44,31 @@ public class AirportLocator implements AirportClient{
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         return restTemplate.exchange(url, HttpMethod.GET, requestEntity, AirportListDto.class).getBody();
+    }
+
+    public FlightDto getFlights(String originAirportCode, String destinationAirportCode){
+        URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_FLIGHT)
+                .queryParam("fly_from", originAirportCode)
+                .queryParam("fly_to", destinationAirportCode)
+                .queryParam("date_from", LocalDate.now().toString())
+                .queryParam("date_to", LocalDate.now().plusDays(30).toString())
+                .queryParam("flight_type", "oneway")
+                .queryParam("max_stopovers", 0)
+                .queryParam("vehicle_type", "aircraft")
+                .queryParam("sort", "price")
+                .queryParam("asc", 1)
+                .queryParam("limit", 1)
+                .build()
+                .encode()
+                .toUri();
+        System.out.println(">>>>>>>>>>>>>>>url: " + url);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("apikey", TEQUILA_API_KEY);
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        return restTemplate.exchange(url, HttpMethod.GET, requestEntity, FlightDto.class).getBody();
+
     }
 
 

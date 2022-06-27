@@ -7,5 +7,6 @@ import java.util.List;
 public interface AirportClient {
 
     public AirportListDto getAirports(Double latitude, Double longitude);
+    public FlightDto getFlights(String originAirportCode, String destinationAirportCode);
 
 }
