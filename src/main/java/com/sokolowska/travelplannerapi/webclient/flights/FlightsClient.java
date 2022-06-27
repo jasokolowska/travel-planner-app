@@ -1,18 +1,17 @@
-package com.sokolowska.travelplannerapi.tequila;
+package com.sokolowska.travelplannerapi.webclient.flights;
 
 import com.sokolowska.travelplannerapi.webclient.flights.dto.AirportListDto;
+import com.sokolowska.travelplannerapi.webclient.flights.dto.FlightDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,6 @@ public class FlightsClient {
 
     private final RestTemplate restTemplate;
 
-    @Override
     public AirportListDto getAirports(Double latitude, Double longitude){
         URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_RADIUS)
                 .queryParam("lat", latitude)
