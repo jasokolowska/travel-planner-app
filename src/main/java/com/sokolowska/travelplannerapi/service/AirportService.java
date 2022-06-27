@@ -2,9 +2,9 @@ package com.sokolowska.travelplannerapi.service;
 
 import com.sokolowska.travelplannerapi.model.Airport;
 import com.sokolowska.travelplannerapi.repository.AirportRepository;
-import com.sokolowska.travelplannerapi.tequila.AirportClient;
-import com.sokolowska.travelplannerapi.tequila.AirportDto;
-import com.sokolowska.travelplannerapi.tequila.AirportListDto;
+import com.sokolowska.travelplannerapi.webclient.flights.AirportClient;
+import com.sokolowska.travelplannerapi.model.dto.AirportDto;
+import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

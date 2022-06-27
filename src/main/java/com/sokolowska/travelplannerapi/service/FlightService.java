@@ -1,7 +1,5 @@
 package com.sokolowska.travelplannerapi.service;
 
-import com.sokolowska.travelplannerapi.controller.dto.CriteriaDto;
-import com.sokolowska.travelplannerapi.model.Flight;
 import com.sokolowska.travelplannerapi.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

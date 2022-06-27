@@ -1,10 +1,9 @@
 package com.sokolowska.travelplannerapi.service;
 
-import com.sokolowska.travelplannerapi.google.GeoApiService;
+import com.sokolowska.travelplannerapi.webclient.geoapi.GeoApiService;
 import com.sokolowska.travelplannerapi.model.Airport;
 import com.sokolowska.travelplannerapi.model.Place;
 import com.sokolowska.travelplannerapi.repository.PlaceRepository;
-import com.sokolowska.travelplannerapi.tequila.AirportClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

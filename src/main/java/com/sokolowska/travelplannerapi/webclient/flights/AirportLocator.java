@@ -1,17 +1,13 @@
-package com.sokolowska.travelplannerapi.tequila;
+package com.sokolowska.travelplannerapi.webclient.flights;
 
+import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
