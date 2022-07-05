@@ -1,8 +1,10 @@
-package com.sokolowska.travelplannerapi.webclient.flights;
+package com.sokolowska.travelplannerapi.webclient.tequilaapi;
 
-import com.sokolowska.travelplannerapi.webclient.flights.dto.AirportListDto;
-import com.sokolowska.travelplannerapi.webclient.flights.dto.FlightDto;
+import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
+import com.sokolowska.travelplannerapi.model.dto.FlightDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightDto;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,7 +17,7 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class FlightsClient {
+public class TequilaApiClient {
 
     public static final String TEQUILA_URL_RADIUS = "https://tequila-api.kiwi.com/locations/radius";
     public static final String TEQUILA_URL_FLIGHT = "https://tequila-api.kiwi.com/v2/search";
@@ -35,16 +37,11 @@ public class FlightsClient {
                 .build()
                 .encode()
                 .toUri();
-        System.out.println(">>>>>>>>>>>>>>>url: " + url);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("apikey", TEQUILA_API_KEY);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(url, HttpMethod.GET, requestEntity, AirportListDto.class).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), AirportListDto.class).getBody();
     }
 
-    public FlightDto getFlights(String originAirportCode, String destinationAirportCode){
+    public TequilaSearchFlightDto getFlight(String originAirportCode, String destinationAirportCode){
         URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_FLIGHT)
                 .queryParam("fly_from", originAirportCode)
                 .queryParam("fly_to", destinationAirportCode)
@@ -59,15 +56,15 @@ public class FlightsClient {
                 .build()
                 .encode()
                 .toUri();
-        System.out.println(">>>>>>>>>>>>>>>url: " + url);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("apikey", TEQUILA_API_KEY);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(url, HttpMethod.GET, requestEntity, FlightDto.class).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), TequilaSearchFlightDto.class).getBody();
 
     }
 
-
+    @NotNull
+    private HttpEntity<Void> getRequestEntity() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("apikey", TEQUILA_API_KEY);
+        return new HttpEntity<>(headers);
+    }
 }

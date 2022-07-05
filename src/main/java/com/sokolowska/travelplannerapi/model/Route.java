@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -29,5 +30,9 @@ public class Route {
     private Place origin;
 
     private BigDecimal maxPrice;
+
+    @OneToMany
+    @JoinColumn(name = "route_id")
+    private List<Flight> flights = new LinkedList<>();
 
 }

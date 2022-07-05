@@ -22,8 +22,7 @@ public class Flight {
     private String cityTo;
     private String departure;
     private String arrival;
-    private BigDecimal price;
+    private double price;
     @Column(length = 1000)
     private String link;
-
 }

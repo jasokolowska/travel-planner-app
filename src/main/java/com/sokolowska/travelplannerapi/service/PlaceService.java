@@ -17,12 +17,14 @@ public class PlaceService {
     private final AirportService airportService;
     private final PlaceRepository placeRepository;
 
-    public Place setCoordinatesAndAirports(Place place){
+    public List<Airport> findAirports(Place place){
         double[] coordinates = geoApiService.findCoordinates(place.getName());
-        List<Airport> airports = airportService.getAirports(coordinates[0], coordinates[1]);
         place.setLatitude(coordinates[0]);
         place.setLongitude(coordinates[1]);
+
+        List<Airport> airports = airportService.getAirports(coordinates[0], coordinates[1]);
         place.setAirports(airports);
-        return placeRepository.save(place);
+        placeRepository.save(place);
+        return airports;
     }
 }

@@ -32,7 +32,7 @@ public class RouteController {
 
     @PostMapping("/add")
     public String addDestination(@ModelAttribute("route") Route route){
-        routeService.save(route);
+        routeService.process(route);
         return "redirect:/routes";
     }
 

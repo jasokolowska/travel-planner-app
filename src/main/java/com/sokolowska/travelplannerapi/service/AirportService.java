@@ -2,9 +2,9 @@ package com.sokolowska.travelplannerapi.service;
 
 import com.sokolowska.travelplannerapi.model.Airport;
 import com.sokolowska.travelplannerapi.repository.AirportRepository;
-import com.sokolowska.travelplannerapi.webclient.flights.FlightsClient;
-import com.sokolowska.travelplannerapi.webclient.flights.dto.AirportDto;
-import com.sokolowska.travelplannerapi.webclient.flights.dto.AirportListDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.TequilaApiClient;
+import com.sokolowska.travelplannerapi.model.dto.AirportDto;
+import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AirportService {
 
-    private final FlightsClient flightsClient;
+    private final TequilaApiClient flightsClient;
     private final AirportRepository airportRepository;
 
     public List<Airport> getAirports(Double latitude, Double longitude) {
