@@ -26,9 +26,7 @@ public class RouteService {
         List<Airport> destinationAirports = placeService.findAirports(route.getDestination());
         List<Airport> originAirports = placeService.findAirports(route.getOrigin());
         List<Flight> flights = flightService.findFlights(originAirports, destinationAirports);
-        System.out.println(flights);
         route.getFlights().addAll(flights);
-
         routeRepository.save(route);
     }
 

@@ -31,6 +31,8 @@ public class Route {
 
     private BigDecimal maxPrice;
 
+    private boolean emailNotification;
+
     @OneToMany
     @JoinColumn(name = "route_id")
     private List<Flight> flights = new LinkedList<>();

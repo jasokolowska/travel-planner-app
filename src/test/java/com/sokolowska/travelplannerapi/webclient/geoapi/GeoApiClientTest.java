@@ -26,36 +26,32 @@ class GeoApiClientTest {
     private GeoApiClient geoApiClient;
 
     @Mock
-    private GeocodingApi geocodingApi;
+    private LocalGeocodingApiRequest geocodingApiRequest;
 
     @Test
     void shouldReturnCoordinatesOfPlace() throws IOException, InterruptedException, ApiException {
         //Given
-//        String place = "Wroclaw";
-//
-//        GeocodingResult geocodingResult = new GeocodingResult();
-//        geocodingResult.geometry = new Geometry();
-//        geocodingResult.geometry.location = new LatLng();
-//        geocodingResult.geometry.location.lat = 51.1;
-//        geocodingResult.geometry.location.lng = 17.03;
-//
-//        GeocodingResult[] geocodingResults = new GeocodingResult[1];
-//        geocodingResults[0] = geocodingResult;
-//
-////
-//
-//        when(geocodingApi.new
-//                .await())
-//                .thenReturn(geocodingResults);
-//
-//
-//        //When
-//        double[] results = geoApiClient.findCoordinates(place);
-//
-//        //Then
-//        assertEquals(2, results.length);
-//        assertEquals(51.1, results[0]);
-//        assertEquals(17.03, results[1]);
+        String place = "Wroclaw";
+
+        GeocodingResult geocodingResult = new GeocodingResult();
+        geocodingResult.geometry = new Geometry();
+        geocodingResult.geometry.location = new LatLng();
+        geocodingResult.geometry.location.lat = 51.1;
+        geocodingResult.geometry.location.lng = 17.03;
+
+        GeocodingResult[] geocodingResults = new GeocodingResult[1];
+        geocodingResults[0] = geocodingResult;
+
+        when(geocodingApiRequest.makeFindPlaceDataRequest(place))
+                .thenReturn(geocodingResults);
+
+        //When
+        double[] results = geoApiClient.findCoordinates(place);
+
+        //Then
+        assertEquals(2, results.length);
+        assertEquals(51.1, results[0]);
+        assertEquals(17.03, results[1]);
 
     }
 }

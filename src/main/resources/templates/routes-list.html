@@ -22,7 +22,8 @@
         <tr>
             <th>Destination</th>
             <th>Origin</th>
-            <th>Price</th>
+            <th>Max Price</th>
+            <th>Notifications</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -31,10 +32,18 @@
             <td th:text="${route.destination.name}"></td>
             <td th:text="${route.origin.name}"></td>
             <td th:text="${route.maxPrice}"></td>
+            <td>
+                <input type="checkbox"
+                        name="emailNotofocation"
+                       th:checked="${route.emailNotification}"/>
+            </td>
             <td><a th:href="@{/routes/delete(id=${route.id})}"
                    class="btn btn-primary btn-sm mb-3"
                    onclick="if (!(confirm('Are you sure you want to delete this route?'))) return false">
                 Delete
+                </a>
+                <a class="btn btn-primary btn-sm mb-3">
+                    Show Flights
                 </a>
             </td>
         </tr>
