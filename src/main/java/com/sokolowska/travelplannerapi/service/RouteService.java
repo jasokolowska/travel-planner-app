@@ -2,7 +2,6 @@ package com.sokolowska.travelplannerapi.service;
 
 import com.sokolowska.travelplannerapi.model.Airport;
 import com.sokolowska.travelplannerapi.model.Flight;
-import com.sokolowska.travelplannerapi.model.Place;
 import com.sokolowska.travelplannerapi.model.Route;
 import com.sokolowska.travelplannerapi.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +31,9 @@ public class RouteService {
 
     public void deleteById(Long id) {
         routeRepository.deleteById(id);
+    }
+
+    public Route add(Route route) {
+        return routeRepository.save(route);
     }
 }
