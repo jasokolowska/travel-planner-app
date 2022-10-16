@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>This page if for system configuration - access only for Admins</title>
+</head>
+<body>
+<p>You don't have authority to access this page</p>
+
+<hr>
+<a th:href="@{/routes}">Back to home page</a>
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.sokolowska.travelplannerapi.controller;
 import com.sokolowska.travelplannerapi.model.Route;
 import com.sokolowska.travelplannerapi.service.RouteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,10 @@ public class RouteController {
     public String deleteDestination(@RequestParam("id") Long id){
         routeService.deleteById(id);
         return "redirect:/routes";
+    }
+
+    @GetMapping("/system")
+    public String getSystemConfiguration(){
+        return "routes-system";
     }
 }

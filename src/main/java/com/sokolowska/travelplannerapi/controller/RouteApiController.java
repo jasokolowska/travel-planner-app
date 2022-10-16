@@ -7,16 +7,11 @@ import com.sokolowska.travelplannerapi.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/routes")
+@RequestMapping("api/routes")
 @RequiredArgsConstructor
 public class RouteApiController {
 
@@ -24,14 +19,13 @@ public class RouteApiController {
     private final RouteMapper routeMapper;
 
     //TODO 1: Add endpoint to addRouteDto (without flights)
-    @PermitAll
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<RouteDto> addRoute(@RequestBody RouteDto routeDto) {
         Route route = routeService.add(routeMapper.mapToDomain(routeDto));
         return new ResponseEntity<>(routeMapper.mapToDto(route), HttpStatus.CREATED);
     }
 
-    @GetMapping("/")
+    @GetMapping("/welcome")
     public ResponseEntity<String> test() {
         return new ResponseEntity<>("Welcome!", HttpStatus.OK);
     }
