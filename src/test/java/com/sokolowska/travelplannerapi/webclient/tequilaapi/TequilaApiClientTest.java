@@ -2,8 +2,9 @@ package com.sokolowska.travelplannerapi.webclient.tequilaapi;
 
 import com.sokolowska.travelplannerapi.model.dto.AirportDto;
 import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
+import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
 import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaFlightDataDto;
-import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightsDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -12,9 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,23 +61,24 @@ class TequilaApiClientTest {
     void shouldReturnTequilaSearchFlightDto() {
         String origin = "Wroclaw";
         String destination = "Londyn";
+        FlightParamsDto flightParamsDto = new FlightParamsDto();
 
         TequilaFlightDataDto tequilaFlightDataDto = TequilaFlightDataDto.builder()
                 .cityFrom("Wroclaw")
                 .cityTo("Londyn")
                 .build();
-        TequilaSearchFlightDto tequilaSearchFlightDto = new TequilaSearchFlightDto(new ArrayList<>());
+        TequilaSearchFlightsDto tequilaSearchFlightDto = new TequilaSearchFlightsDto(new ArrayList<>());
         tequilaSearchFlightDto.getData().add(tequilaFlightDataDto);
 
         when(restTemplate.exchange(
                 ArgumentMatchers.any(),
                 ArgumentMatchers.any(HttpMethod.class),
                 ArgumentMatchers.any(HttpEntity.class),
-                ArgumentMatchers.<Class<TequilaSearchFlightDto>>any()
+                ArgumentMatchers.<Class<TequilaSearchFlightsDto>>any()
         )).thenReturn(new ResponseEntity<>(tequilaSearchFlightDto, HttpStatus.OK));
 
         //When
-        TequilaSearchFlightDto flightsDto = tequilaApiClient.getFlight(origin, destination);
+        TequilaSearchFlightsDto flightsDto = tequilaApiClient.getFlight(origin, destination, flightParamsDto);
 
         //Then
         assertEquals(1, flightsDto.getData().size());

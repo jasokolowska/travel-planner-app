@@ -1,13 +1,16 @@
 package com.sokolowska.travelplannerapi.controller;
 
-import com.sokolowska.travelplannerapi.model.Route;
-import com.sokolowska.travelplannerapi.model.dto.RouteDto;
+import com.sokolowska.travelplannerapi.model.Flight;
+import com.sokolowska.travelplannerapi.model.dto.FlightDto;
+import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
 import com.sokolowska.travelplannerapi.model.mapper.RouteMapper;
 import com.sokolowska.travelplannerapi.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -20,10 +23,17 @@ public class RouteApiController {
 
     //TODO 1: Add endpoint to addRouteDto (without flights)
     @PostMapping("")
-    public ResponseEntity<RouteDto> addRoute(@RequestBody RouteDto routeDto) {
-        Route route = routeService.add(routeMapper.mapToDomain(routeDto));
-        return new ResponseEntity<>(routeMapper.mapToDto(route), HttpStatus.CREATED);
+    public ResponseEntity<List<FlightDto>> searchFlight(@RequestBody FlightParamsDto flightParamsDto) {
+        System.out.println("flightParamsDto.isTwoWayTrip() in Controller" + flightParamsDto.isTwoWayTrip());
+        List<Flight> flights= routeService.findCheapestFlights(flightParamsDto);
+        return new ResponseEntity(flights, HttpStatus.CREATED);
     }
+
+//    @GetMapping("")
+//    public ResponseEntity<List<Flight>> search(@RequestParam String destination, @RequestParam String origin) {
+//        List<Flight> flights= routeService.findCheapestFlights(destination, origin);
+//        return new ResponseEntity<>(flights, HttpStatus.CREATED);
+//    }
 
     @GetMapping("/welcome")
     public ResponseEntity<String> test() {

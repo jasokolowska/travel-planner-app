@@ -2,38 +2,47 @@ package com.sokolowska.travelplannerapi.service;
 
 import com.sokolowska.travelplannerapi.model.Airport;
 import com.sokolowska.travelplannerapi.model.Flight;
+import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
 import com.sokolowska.travelplannerapi.repository.FlightRepository;
 import com.sokolowska.travelplannerapi.webclient.tequilaapi.TequilaApiClient;
 import com.sokolowska.travelplannerapi.model.dto.FlightDto;
-import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaFlightDataDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightsDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FlightService {
 
     private final FlightRepository flightRepository;
     private final TequilaApiClient flightsClient;
 
-    public FlightDto getFlight(String originAirportCode, String destinationAirportCode) {
-        TequilaSearchFlightDto flightDto = flightsClient.getFlight(originAirportCode, destinationAirportCode);
-        if (flightDto.getData().isEmpty()) {
-            return null;
+    public List<FlightDto> getFlights(String originAirportCode, String destinationAirportCode, FlightParamsDto flightParamsDto) {
+        TequilaSearchFlightsDto tequilaSearchFlightsDto = flightsClient.getFlight(originAirportCode, destinationAirportCode, flightParamsDto);
+        List<FlightDto> flightsDto = new ArrayList<>();
+        if (tequilaSearchFlightsDto.getData().isEmpty()) {
+            return flightsDto;
         }
-        return FlightDto.builder()
-                .cityFrom(flightDto.getData().get(0).getCityFrom())
-                .cityTo(flightDto.getData().get(0).getCityTo())
-                .price(flightDto.getData().get(0).getPrice())
-                .link(flightDto.getData().get(0).getDeepLink())
-                .arrival(flightDto.getData().get(0).getLocalArrival())
-                .departure(flightDto.getData().get(0).getLocalDeparture())
-                .build();
+
+        for (TequilaFlightDataDto flightDataDto : tequilaSearchFlightsDto.getData()) {
+            FlightDto flightDto = FlightDto.builder()
+                    .cityFrom(flightDataDto.getCityFrom())
+                    .cityTo(flightDataDto.getCityTo())
+                    .price(flightDataDto.getPrice())
+                    .link(flightDataDto.getDeepLink())
+                    .arrival(flightDataDto.getLocalArrival())
+                    .departure(flightDataDto.getLocalDeparture())
+                    .build();
+            flightsDto.add(flightDto);
+        }
+        return flightsDto;
     }
 
     @NotNull
@@ -49,14 +58,15 @@ public class FlightService {
         return flightRepository.save(flight);
     }
 
-    public List<Flight> findFlights(List<Airport> originAirports, List<Airport> destinationAirports) {
+    public List<Flight> findFlights(List<Airport> originAirports, List<Airport> destinationAirports, FlightParamsDto flightParamsDto) {
         return originAirports.stream()
                 .flatMap(startAirport -> destinationAirports.stream()
-                .map(endAirport -> getFlight(startAirport.getCode(), endAirport.getCode())))
+                        .map(endAirport -> getFlights(startAirport.getCode(), endAirport.getCode(), flightParamsDto)))
+                .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .sorted(Comparator.comparing(FlightDto::getPrice))
                 .limit(3)
                 .map(this::mapAndSave)
-                .toList();
+                .collect(Collectors.toList());
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TequilaSearchFlightDto {
+public class TequilaSearchFlightsDto {
 
     @JsonProperty("data")
     private List<TequilaFlightDataDto> data;

@@ -8,6 +8,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -15,12 +21,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().configurationSource(request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+            config.setAllowedMethods(Collections.singletonList("*"));
+            config.setAllowCredentials(true);
+            config.setAllowedHeaders(Collections.singletonList("*"));
+            config.setMaxAge(3600L);
+            return config;
+        })
+                .and().csrf()
+                .ignoringAntMatchers("/register", "/api/routes")
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
                 .authorizeHttpRequests(authorizationRequest -> {
                             authorizationRequest
-                                    .antMatchers("/routes/system", "/routes", "/api/routes").authenticated()
-                                    .antMatchers("/api/routes/*", "/welcome").authenticated()
-                                    .antMatchers("/login", "/register").permitAll();
+//                                    .antMatchers("/routes/system", "/routes", "/welcome").authenticated()
+                                    .antMatchers("/login", "/register", "/api/routes").permitAll();
                         })
                 .httpBasic(Customizer.withDefaults());
         return http.build();

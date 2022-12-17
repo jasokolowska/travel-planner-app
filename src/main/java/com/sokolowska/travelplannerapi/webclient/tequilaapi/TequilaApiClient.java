@@ -1,8 +1,8 @@
 package com.sokolowska.travelplannerapi.webclient.tequilaapi;
 
 import com.sokolowska.travelplannerapi.model.dto.AirportListDto;
-import com.sokolowska.travelplannerapi.model.dto.FlightDto;
-import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightDto;
+import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
+import com.sokolowska.travelplannerapi.webclient.tequilaapi.dto.TequilaSearchFlightsDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpEntity;
@@ -22,7 +22,7 @@ public class TequilaApiClient {
     public static final String TEQUILA_URL_RADIUS = "https://tequila-api.kiwi.com/locations/radius";
     public static final String TEQUILA_URL_FLIGHT = "https://tequila-api.kiwi.com/v2/search";
     private final String TEQUILA_API_KEY = System.getenv("TEQUILA_API");
-    private final int LOCATOR_RADIUS_KM = 250;
+    private final int LOCATOR_RADIUS_KM = 500;
 
     private final RestTemplate restTemplate;
 
@@ -41,23 +41,25 @@ public class TequilaApiClient {
         return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), AirportListDto.class).getBody();
     }
 
-    public TequilaSearchFlightDto getFlight(String originAirportCode, String destinationAirportCode){
+    public TequilaSearchFlightsDto getFlight(String originAirportCode, String destinationAirportCode, FlightParamsDto flightParamsDto){
         URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_FLIGHT)
                 .queryParam("fly_from", originAirportCode)
                 .queryParam("fly_to", destinationAirportCode)
-                .queryParam("date_from", LocalDate.now().toString())
-                .queryParam("date_to", LocalDate.now().plusDays(30).toString())
-                .queryParam("flight_type", "oneway")
-                .queryParam("max_stopovers", 0)
+                .queryParam("date_from", flightParamsDto.getDateFrom() != null ? flightParamsDto.getDateFrom() : LocalDate.now().toString())
+                .queryParam("date_to", flightParamsDto.getDateTo() != null ? flightParamsDto.getDateTo() : LocalDate.now().plusDays(90).toString())
+                .queryParam("nights_in_dst_from", 2)
+                .queryParam("nights_in_dst_to", 8)
+                .queryParam("flight_type", flightParamsDto.isTwoWayTrip() ? "round" : "oneway")
+                .queryParam("max_stopovers", flightParamsDto.getStopovers() != 3 ? flightParamsDto.getStopovers() : 3)
                 .queryParam("vehicle_type", "aircraft")
                 .queryParam("sort", "price")
                 .queryParam("asc", 1)
-                .queryParam("limit", 1)
+                .queryParam("limit", 3)
                 .build()
                 .encode()
                 .toUri();
 
-        return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), TequilaSearchFlightDto.class).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), TequilaSearchFlightsDto.class).getBody();
 
     }
 

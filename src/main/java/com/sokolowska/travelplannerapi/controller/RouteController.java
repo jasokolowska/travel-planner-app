@@ -31,11 +31,11 @@ public class RouteController {
         return "route-form";
     }
 
-    @PostMapping("/add")
-    public String addDestination(@ModelAttribute("route") Route route){
-        routeService.process(route);
-        return "redirect:/routes";
-    }
+//    @PostMapping("/add")
+//    public String addDestination(@ModelAttribute("route") Route route){
+//        routeService.process(route);
+//        return "redirect:/routes";
+//    }
 
     @GetMapping("/delete")
     public String deleteDestination(@RequestParam("id") Long id){

@@ -22,16 +22,4 @@ public class FlightDto {
     private String link;
     private String arrival;
     private String departure;
-
-//    @JsonProperty("data")
-//    private void unpackNested(List<Map<String, Object>> data) {
-//        if (!data.isEmpty()) {
-//            this.cityFrom = (String) data.get(0).get("cityFrom");
-//            this.cityTo = (String) data.get(0).get("cityTo");
-//            this.price = (int) data.get(0).get("price");
-//            this.link = (String) data.get(0).get("deep_link");
-//            this.arrival = (String) data.get(0).get("local_arrival");
-//            this.departure = (String) data.get(0).get("local_departure");
-//        }
-//    }
 }
