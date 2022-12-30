@@ -26,7 +26,7 @@ public class TequilaApiClient {
 
     private final RestTemplate restTemplate;
 
-    public AirportListDto getAirports(Double latitude, Double longitude){
+    public AirportListDto getAirports(Double latitude, Double longitude) {
         URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_RADIUS)
                 .queryParam("lat", latitude)
                 .queryParam("lon", longitude)
@@ -41,23 +41,26 @@ public class TequilaApiClient {
         return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), AirportListDto.class).getBody();
     }
 
-    public TequilaSearchFlightsDto getFlight(String originAirportCode, String destinationAirportCode, FlightParamsDto flightParamsDto){
-        URI url = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_FLIGHT)
+    public TequilaSearchFlightsDto getFlight(String originAirportCode, String destinationAirportCode, FlightParamsDto flightParamsDto) {
+        UriComponentsBuilder httpUrlBuilder = UriComponentsBuilder.fromHttpUrl(TEQUILA_URL_FLIGHT)
                 .queryParam("fly_from", originAirportCode)
                 .queryParam("fly_to", destinationAirportCode)
                 .queryParam("date_from", flightParamsDto.getDateFrom() != null ? flightParamsDto.getDateFrom() : LocalDate.now().toString())
                 .queryParam("date_to", flightParamsDto.getDateTo() != null ? flightParamsDto.getDateTo() : LocalDate.now().plusDays(90).toString())
-                .queryParam("nights_in_dst_from", 2)
-                .queryParam("nights_in_dst_to", 8)
                 .queryParam("flight_type", flightParamsDto.isTwoWayTrip() ? "round" : "oneway")
                 .queryParam("max_stopovers", flightParamsDto.getStopovers() != 3 ? flightParamsDto.getStopovers() : 3)
                 .queryParam("vehicle_type", "aircraft")
                 .queryParam("sort", "price")
                 .queryParam("asc", 1)
-                .queryParam("limit", 3)
-                .build()
-                .encode()
-                .toUri();
+                .queryParam("limit", 3);
+
+        if (flightParamsDto.isTwoWayTrip()) {
+            httpUrlBuilder
+                    .queryParam("nights_in_dst_from", 0)
+                    .queryParam("nights_in_dst_to", flightParamsDto.getDays());
+        }
+
+        URI url = httpUrlBuilder.build().encode().toUri();
 
         return restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(), TequilaSearchFlightsDto.class).getBody();
 
