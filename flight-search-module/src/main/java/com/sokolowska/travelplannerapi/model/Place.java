@@ -14,14 +14,14 @@ import java.util.List;
 public class Place {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
     private Double latitude;
     private Double longitude;
 
-    @OneToMany
+    @OneToMany(mappedBy = "place")
     private List<Airport> airports;
 
 }

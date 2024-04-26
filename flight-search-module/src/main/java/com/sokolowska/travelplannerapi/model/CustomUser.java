@@ -14,12 +14,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "custom_users")
+@Table(name = "users")
 public class CustomUser implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
     private Long id;
 
     private String email;

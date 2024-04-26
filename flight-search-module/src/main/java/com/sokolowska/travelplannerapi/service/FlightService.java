@@ -13,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,9 +54,9 @@ public class FlightService {
         Flight flight = Flight.builder()
                 .cityFrom(flightDto.getCityFrom())
                 .cityTo(flightDto.getCityTo())
-                .arrival(flightDto.getArrival())
-                .departure(flightDto.getDeparture())
-                .price(flightDto.getPrice())
+                .arrival(LocalDateTime.parse(flightDto.getArrival()))
+                .departure(LocalDateTime.parse(flightDto.getDeparture()))
+                .price(BigDecimal.valueOf(flightDto.getPrice()))
                 .link(flightDto.getLink())
                 .build();
         return flightRepository.save(flight);
