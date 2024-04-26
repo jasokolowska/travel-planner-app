@@ -10,6 +10,5 @@ public interface PlaceMapper {
 
     PlaceDto mapToDto(Place domain);
 
-    @Mapping(target = "id", ignore = true)
     Place mapToDomain(PlaceDto dto);
 }
