@@ -1,8 +1,11 @@
 package com.sokolowska.travelplannerapi.service;
 
-import com.sokolowska.airport.api.service.PlaceService;
+import com.sokolowska.travelplannerapi.api.LocationService;
+import com.sokolowska.travelplannerapi.api.dto.AirportDto;
 import com.sokolowska.travelplannerapi.model.*;
+import com.sokolowska.travelplannerapi.model.dto.FlightDto;
 import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
+import com.sokolowska.travelplannerapi.model.mapper.FlightMapper;
 import com.sokolowska.travelplannerapi.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,17 +19,26 @@ import java.util.List;
 public class RouteService {
 
     private final RouteRepository routeRepository;
-    private final PlaceService placeService;
+    private final LocationService locationService;
     private final FlightService flightService;
+    private final FlightMapper flightMapper;
 
-    public List<Route> findAll() {
-        return routeRepository.findAll();
+
+    public List<FlightDto> findCheapestFlights(FlightParamsDto flightParamsDto) {
+        List<AirportDto> destinationAirports =
+                locationService.findOriginAirportsByLocation(flightParamsDto.getDestination());
+        List<AirportDto> originAirports =
+                locationService.findDestinationAirportsByLocation(flightParamsDto.getOrigin());
+
+        List<Flight> flights = flightService.retrieveAndSaveFlights(
+                getAirportCodes(originAirports),
+                getAirportCodes(destinationAirports),
+                flightParamsDto);
+        return this.flightMapper.toDtoList(flights);
     }
 
-    public List<Flight> findCheapestFlights(FlightParamsDto flightParamsDto) {
-        List<String> destinationAirports = placeService.findAirportCodesByLocation(flightParamsDto.getDestination());
-        List<String> originAirports = placeService.findAirportCodesByLocation(flightParamsDto.getOrigin());
-        return flightService.findFlights(originAirports, destinationAirports, flightParamsDto);
+    private List<String> getAirportCodes(List<AirportDto> airports) {
+        return airports.stream().map(AirportDto::getCode).toList();
     }
 
     public void deleteById(Long id) {
@@ -34,10 +46,6 @@ public class RouteService {
     }
 
     public Route add(Route route) {
-//        TODO: Decide how to handle Place (Location object)
-//        Place destination = route.getDestination();
-//        Place origin = route.getOrigin();
-//        placeService.saveAll(List.of(destination, origin));
         return routeRepository.save(route);
     }
 }

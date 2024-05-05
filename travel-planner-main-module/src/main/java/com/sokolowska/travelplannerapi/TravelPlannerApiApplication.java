@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.sokolowska.travelplannerapi")
 public class TravelPlannerApiApplication {
 
     public static void main(String[] args) {

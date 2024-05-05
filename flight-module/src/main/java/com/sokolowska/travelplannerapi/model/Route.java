@@ -21,13 +21,11 @@ public class Route {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "destination_id")
-//    private Place destination;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "origin_id")
-//    private Place origin;
+    @Column(name = "destination_id")
+    private String destinationGeoApiPlaceId;
+
+    @Column(name = "origin_id")
+    private String originGeoApiPlaceId;
 
     private BigDecimal maxPrice;
 

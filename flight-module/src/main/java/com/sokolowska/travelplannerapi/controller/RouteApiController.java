@@ -5,8 +5,10 @@ import com.sokolowska.travelplannerapi.model.dto.FlightDto;
 import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
 import com.sokolowska.travelplannerapi.model.mapper.RouteMapper;
 import com.sokolowska.travelplannerapi.service.RouteService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +24,10 @@ public class RouteApiController {
     private final RouteMapper routeMapper;
 
     //TODO 1: Add endpoint to addRouteDto (without flights)
-    @PostMapping("")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FlightDto>> searchFlight(@RequestBody FlightParamsDto flightParamsDto) {
-        System.out.println("flightParamsDto.isTwoWayTrip() in Controller" + flightParamsDto.isTwoWayTrip());
-        List<Flight> flights= routeService.findCheapestFlights(flightParamsDto);
-        return new ResponseEntity(flights, HttpStatus.CREATED);
+        List<FlightDto> flights= routeService.findCheapestFlights(flightParamsDto);
+        return new ResponseEntity<>(flights, HttpStatus.CREATED);
     }
 
 //    @GetMapping("")

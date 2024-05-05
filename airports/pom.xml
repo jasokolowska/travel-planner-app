@@ -9,14 +9,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>flight-module</artifactId>
+    <artifactId>airports</artifactId>
     <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
-            <groupId>com.sokolowska</groupId>
-            <artifactId>airports</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+            <version>2.2.0</version>
         </dependency>
     </dependencies>
 </project>

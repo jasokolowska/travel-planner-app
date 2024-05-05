@@ -4,7 +4,7 @@ import com.sokolowska.travelplannerapi.model.Route;
 import com.sokolowska.travelplannerapi.model.dto.RouteDto;
 import org.mapstruct.Mapper;
 
-//@Mapper(componentModel = "spring", uses = PlaceMapper.class)
+@Mapper(componentModel = "spring")
 public interface RouteMapper {
 
     RouteDto mapToDto(Route route);

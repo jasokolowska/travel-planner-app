@@ -24,6 +24,6 @@ public class Flight {
     private LocalDateTime departure;
     private LocalDateTime arrival;
     private BigDecimal price;
-    @Column(length = 1000)
+    @Column(length = 4000)
     private String link;
 }
