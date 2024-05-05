@@ -1,7 +1,7 @@
-package com.sokolowska.repository;
+package com.sokolowska.travelplannerapi.repository;
 
 
-import com.sokolowska.model.CustomUser;
+import com.sokolowska.travelplannerapi.model.CustomUser;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

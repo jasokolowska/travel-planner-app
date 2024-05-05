@@ -17,3 +17,8 @@ spring:
       password: admin
 server:
   port: 8089
+logging:
+  level:
+    org:
+      springframework: INFO
+      springframework.web: DEBUG

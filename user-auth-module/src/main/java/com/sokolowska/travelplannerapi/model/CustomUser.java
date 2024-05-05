@@ -1,4 +1,4 @@
-package com.sokolowska.model;
+package com.sokolowska.travelplannerapi.model;
 
 import lombok.Getter;
 import lombok.Setter;

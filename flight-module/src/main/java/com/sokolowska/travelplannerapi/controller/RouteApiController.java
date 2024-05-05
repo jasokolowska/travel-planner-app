@@ -6,6 +6,7 @@ import com.sokolowska.travelplannerapi.model.dto.FlightParamsDto;
 import com.sokolowska.travelplannerapi.model.mapper.RouteMapper;
 import com.sokolowska.travelplannerapi.service.RouteService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

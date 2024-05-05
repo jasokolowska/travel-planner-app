@@ -1,8 +1,8 @@
-package com.sokolowska.config;
+package com.sokolowska.travelplannerapi.config;
 
 
-import com.sokolowska.model.CustomUser;
-import com.sokolowska.repository.CustomUserRepository;
+import com.sokolowska.travelplannerapi.model.CustomUser;
+import com.sokolowska.travelplannerapi.repository.CustomUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

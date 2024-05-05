@@ -1,8 +1,8 @@
-package com.sokolowska.controller;
+package com.sokolowska.travelplannerapi.controller;
 
 
-import com.sokolowska.model.CustomUser;
-import com.sokolowska.service.UserService;
+import com.sokolowska.travelplannerapi.model.CustomUser;
+import com.sokolowska.travelplannerapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
