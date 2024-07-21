@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class TravelPlannerApiApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(TravelPlannerApiApplication.class, args);
+        SpringApplication.run(TravelPlannerApiApplication.class, args);
     }
 
     @Bean
